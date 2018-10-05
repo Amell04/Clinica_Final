@@ -1,0 +1,237 @@
+﻿@model proyectoFinal.Models.consulta
+@using proyectoFinal.Models;
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 ">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h3> Nueva Consulta</h3>
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.diagnostico, "Diagnostico :", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.diagnostico, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.diagnostico, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.observaciones, "Descripción:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.observaciones, new { htmlAttributes = new { @cols = "100", @rows = "4", @style="width:100%;"} })
+                        @Html.ValidationMessageFor(model => model.observaciones, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.codcita, "Citas:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+
+                        @Html.DropDownList("codcita", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.codcita, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="container">
+
+                            <!-- Trigger the modal with a button -->
+                            <button type="button" class="btn btn-warning btn-lg glyphicon glyphicon-list-alt" data-toggle="modal" data-target="#myModal">Citas</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title text-center">Listado de Citas</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @{
+                                                List<cita> citas = ViewBag.cita;
+                                                Html.RenderPartial("~/Views/consultas/info.cshtml", citas);
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <h3 class="text-center">Detalles </h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-offset-2">
+                            <div class="col-md-2">
+                                <input type="number" id="Txtcant" class="form-control text-center" placeholder="Cantidad" />
+
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="TxtMed" class="form-control text-center" placeholder="Medicamento" style="width: 150%;" disabled />
+                            </div>
+
+
+                            <div class="col-md- col-xs-8">
+                                <div class="form-inline col-md-9">
+                                    <button type="button" class="btn btn-default glyphicon glyphicon-search" data-toggle="modal" data-target="#exampleModal"></button>
+                                    <input type="text" id="txtDosis" placeholder="Dosis" class="form-control text-center" />
+
+                                    <button type="button" id="addDetalle" class="btn btn-info glyphicon glyphicon-plus">Agregar</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                @{
+                    IEnumerable<Medicamento> Med = new List<Medicamento>();
+                    Med = ViewBag.LTMed;
+
+                }
+                <br />
+                <br />
+                <div id="detalles">
+                    @{ Html.RenderPartial("DetallesCrear");}
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Listado de Medicamentos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Medicamento
+                                        </th>
+                                        <th>
+                                            Fecha de Vencimiento
+                                        </th>
+                                        <th></th>
+                                    </tr>
+
+                                    @foreach (var item in Med)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Medicamento1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.fechaVencimiento)
+                                            </td>
+                                            <td>
+                                                <button onclick="agregarReceta(@item.idMed,'@item.Medicamento1')"
+                                                        type="button" id="AgregarReceta"
+                                                        class="btn btn-warning"
+                                                        data-dismiss="modal">
+                                                    Agregar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+            }
+
+            <div>
+                @Html.ActionLink("Regresar a la lista", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(iniciar);
+    var dataDetalle = { id: 0, medicamento: "", cantidad: 0, dosis: "" };
+    function iniciar() {
+        $("#addDetalle").click(AgregarDetalle);
+    }
+    //peticion Ajax
+    function AgregarDetalle() {
+        dataDetalle.cantidad = $("#Txtcant").val();
+        dataDetalle.dosis = $("#txtDosis").val();
+
+        $.ajax({
+            method: "Post",
+            data: {
+                idMedicamento: dataDetalle.id,
+                cantidad: dataDetalle.cantidad,
+                dosis: dataDetalle.dosis
+
+            },
+            url: "/consultas/DetallesCrear",
+            success: function (data) {
+                $("#detalles").html(data);
+            },
+            error: function () {
+                alert("Error la agregar detalle");
+            }
+        })
+
+    }
+    function agregarReceta(id, medicamento) {
+
+        dataDetalle.id = id;
+        dataDetalle.medicamento = medicamento;
+        $("#TxtMed").val(medicamento);
+    }
+</script>
+
+

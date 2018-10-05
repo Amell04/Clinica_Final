@@ -1,0 +1,87 @@
+﻿@model proyectoFinal.Models.mascota
+
+@{
+    ViewBag.Title = "Delete";
+    String msj = ViewBag.errorMsj;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-offset-1">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h3>¿Esta seguro de que desea eliminar este registro?</h3>
+            <div>
+
+                <hr />
+
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Propietario de Mascota:
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Propietario_Mascota.nombre)
+                        </dd>
+
+                        <dt>
+                            Especie:
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.tipo_mascota.especie)
+                        </dd>
+
+                        <dt>
+                            Nombre ed Mascota :
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.nombre)
+                        </dd>
+
+                        <dt>
+                            Peso en Lb :
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.peso)
+                        </dd>
+
+                        <dt>
+                            Sexo:
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sexo)
+                        </dd>
+
+                        <dt>
+                            Fecha de Naciemiento :
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.fechanacimiento)
+                        </dd>
+
+                    </dl>
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+                    </div>
+                    <h1 class="text-danger">@msj</h1>
+                }
+            </div>
+        </div>
+    </div>
+</div>

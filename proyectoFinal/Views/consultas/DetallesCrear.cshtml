@@ -1,0 +1,36 @@
+﻿@model ICollection<proyectoFinal.Models.recetaDetalle>
+
+<table class="table table-bordered">
+    <thead class="bg-info">
+        <tr>
+            <th class=" text-center">
+                Cantidad
+            </th>
+
+            <th class=" text-center" >
+                Medicamento
+            </th>
+            <th class=" text-center">
+                Dosis
+            </th>
+           
+        </tr>
+    </thead>
+    
+    @if (Model!= null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.cantidad</td>
+
+                <td> @item.Medicamento.Medicamento1</td>
+
+                <td>@item.dosis</td>
+            </tr>
+        }
+    }
+
+
+</table>
+

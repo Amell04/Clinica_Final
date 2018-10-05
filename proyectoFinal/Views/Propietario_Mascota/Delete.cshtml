@@ -1,0 +1,86 @@
+﻿@model proyectoFinal.Models.Propietario_Mascota
+
+@{
+    ViewBag.Title = "Delete";
+    String msj = ViewBag.errorMsj;
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-offset-1">
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <h3>¿Esta seguro de que desea eliminar este registro?</h3>
+            <div>
+
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.nombre)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.apellido)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.apellido)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.dui)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.dui)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.sexo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.sexo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.direccion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.direccion)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.telefono)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.telefono)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                        @Html.ActionLink("Regresar", "Index")
+                    </div>
+                    <h1 class="text-danger">@msj</h1>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*<h1 class="text-danger">@ViewBag.error</h1>*@
